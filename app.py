@@ -10,6 +10,7 @@ import requests
 
 # Memory optimization for Render
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL"] = "True"
 
 app = FastAPI()
 
