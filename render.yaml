@@ -12,3 +12,5 @@ services:
         value: 10000
       - key: TOKENIZERS_PARALLELISM
         value: false
+      - key: OMP_NUM_THREADS
+        value: "1"
