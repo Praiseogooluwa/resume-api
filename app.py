@@ -9,8 +9,10 @@ import io
 import requests
 
 # Memory optimization for Render
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-os.environ["SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL"] = "True"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"  # Disables parallel tokenizers
+os.environ["SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL"] = "True"  # Bypasses scikit-learn compilation
+os.environ["OMP_NUM_THREADS"] = "1"  # Limits OpenMP to single thread
+os.environ["MKL_NUM_THREADS"] = "1"  # Limits Math Kernel Library threads"
 
 app = FastAPI()
 
