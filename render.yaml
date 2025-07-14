@@ -1,11 +1,13 @@
 services:
-- type: web
-  name: resume-api
-  env: python
-  plan: free
-  buildCommand: pip install -r requirements.txt
-  startCommand: uvicorn app:app --host=0.0.0.0 --port=10000
-  envVars:
-  - key: JSEARCH_API_KEY
-    sync: false
-  autoDeploy: true
+  - type: web
+    name: job-matcher
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host=0.0.0.0 --port=${PORT}
+    healthCheckPath: /
+    plan: free
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: TOKENIZERS_PARALLELISM
+        value: false
