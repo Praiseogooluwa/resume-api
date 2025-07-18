@@ -1,9 +1,10 @@
-
-mangum  # Critical for Vercel compatibility
-fastapi
-uvicorn
-python-multipart
-PyMuPDF
-sentence-transformers
-torch>=2.0.0  # Specify version to reduce size
-requests
+fastapi==0.109.2
+uvicorn==0.27.1
+python-multipart==0.0.7
+pymupdf==1.24.1  # Smaller than fitz
+sentence-transformers==2.7.0
+--find-links https://download.pytorch.org/whl/cpu
+torch==2.2.1+cpu  # CPU-only version (50% smaller)
+mangum==0.17.0
+python-dotenv==1.0.1
+requests==2.31.0
