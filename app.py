@@ -8,6 +8,7 @@ import fitz  # PyMuPDF
 import io
 import requests
 import os
+from mangum import Mangum  # NEW: Required for Vercel
 
 app = FastAPI()
 
@@ -23,7 +24,11 @@ app.add_middleware(
 def extract_text_from_pdf(uploaded_file: UploadFile) -> str:
     """Extracts text from a PDF file using PyMuPDF"""
     try:
+        # NEW: Add size limit (5MB) for Vercel's 10s timeout
         pdf_data = uploaded_file.file.read()
+        if len(pdf_data) > 5_000_000:  # 5MB
+            return "Error: PDF exceeds 5MB size limit"
+            
         pdf_stream = io.BytesIO(pdf_data)
         doc = fitz.open(stream=pdf_stream, filetype="pdf")
         text = ""
@@ -32,9 +37,6 @@ def extract_text_from_pdf(uploaded_file: UploadFile) -> str:
         return text
     except Exception as e:
         return f"Error reading PDF: {str(e)}"
-    
-
-# Remove the dummy fetch_jobs_from_api function entirely
 
 @app.post("/match-jobs/")
 async def match_jobs(file: UploadFile = File(...), query: str = Form(...)):
@@ -52,8 +54,6 @@ async def match_jobs(file: UploadFile = File(...), query: str = Form(...)):
     except Exception as e:
         return {"error": f"Job matching failed: {str(e)}"}
 
-
-# ✅ NEW: Fetch live jobs using JSearch API
 @app.get("/get-jobs/")
 async def get_jobs(query: str = Query(..., description="Job search keyword")):
     api_key = os.getenv("JSEARCH_API_KEY")
@@ -68,7 +68,8 @@ async def get_jobs(query: str = Query(..., description="Job search keyword")):
     params = {"query": query, "num_pages": 1}
 
     try:
-        response = requests.get(url, headers=headers, params=params)
+        # NEW: Add timeout for Vercel's 10s limit
+        response = requests.get(url, headers=headers, params=params, timeout=8)
         response.raise_for_status()
         results = response.json().get("data", [])
 
@@ -81,8 +82,9 @@ async def get_jobs(query: str = Query(..., description="Job search keyword")):
                 "description": job.get("job_description", "")[:300] + "...",
                 "apply_link": job.get("job_apply_link")
             })
-
         return {"jobs": jobs}
-    
     except Exception as e:
         return {"error": f"Failed to fetch jobs: {str(e)}"}
+
+# NEW: Vercel requirement - expose ASGI handler
+handler = Mangum(app)
