@@ -1,24 +1,9 @@
-# Core requirements
-fastapi==0.95.2
-uvicorn==0.22.0
-python-multipart==0.0.6
-python-dotenv==1.0.0
-requests==2.31.0
-
-# Document processing
-PyMuPDF==1.22.5
-python-docx==0.8.11
-
-# ML/NLP with memory optimization
-scikit-learn==1.5.2 --only-binary=scikit-learn
-sentence-transformers==2.2.2
-torch==2.7.1
-numpy==1.24.4
-joblib==1.3.2
-threadpoolctl==3.2.0
-transformers==4.41.1
-tqdm==4.66.2
-setuptools>=65.5.1
-wheel
-build
-
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+requests
+PyMuPDF
+scikit-learn
+sentence-transformers
+torch  # Required dependency for sentence-transformers
