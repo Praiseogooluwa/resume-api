@@ -6,7 +6,8 @@ from sentence_transformers import SentenceTransformer, util
 # Load env vars from .env file
 load_dotenv()
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
+# In matcher.py
+model = SentenceTransformer('paraphrase-albert-small-v2')  # 45MB vs 420MB
 
 JSEARCH_API_KEY = os.getenv("JSEARCH_API_KEY")
 JSEARCH_ENDPOINT = "https://jsearch.p.rapidapi.com/search"
