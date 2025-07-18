@@ -19,7 +19,7 @@ HEADERS = {
 def fetch_jobs_from_api(query, num_results=10):
     params = {"query": query, "num_pages": 1}
     try:
-        response = requests.get(JSEARCH_ENDPOINT, headers=HEADERS, params=params)
+        response = requests.get(JSEARCH_ENDPOINT, headers=HEADERS, params=params, timeout=10)
         response.raise_for_status()
         data = response.json()
         
