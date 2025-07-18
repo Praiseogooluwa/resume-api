@@ -1,9 +1,8 @@
+
+mangum  # Critical for Vercel compatibility
 fastapi
 uvicorn
 python-multipart
-python-dotenv
-requests
 PyMuPDF
-scikit-learn
 sentence-transformers
-torch  # Required dependency for sentence-transformers
+torch>=2.0.0  # Specify version to reduce size
