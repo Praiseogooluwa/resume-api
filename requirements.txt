@@ -6,3 +6,4 @@ python-multipart
 PyMuPDF
 sentence-transformers
 torch>=2.0.0  # Specify version to reduce size
+requests
